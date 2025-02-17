@@ -8,11 +8,11 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/beelchester/arigo/internal/pkg/wsrpc"
+	"github.com/beelchester/arigo/pkg/aria2proto"
 	"github.com/cenkalti/rpc2"
 	"github.com/cenkalti/rpc2/jsonrpc"
 	"github.com/gorilla/websocket"
-	"github.com/siku2/arigo/internal/pkg/wsrpc"
-	"github.com/siku2/arigo/pkg/aria2proto"
 )
 
 const (
@@ -109,22 +109,27 @@ func (c *Client) onDownloadStart(_ *rpc2.Client, event *DownloadEvent, _ *interf
 	c.evtTarget.Dispatch(StartEvent, event)
 	return nil
 }
+
 func (c *Client) onDownloadPause(_ *rpc2.Client, event *DownloadEvent, _ *interface{}) error {
 	c.evtTarget.Dispatch(PauseEvent, event)
 	return nil
 }
+
 func (c *Client) onDownloadStop(_ *rpc2.Client, event *DownloadEvent, _ *interface{}) error {
 	c.evtTarget.Dispatch(StopEvent, event)
 	return nil
 }
+
 func (c *Client) onDownloadComplete(_ *rpc2.Client, event *DownloadEvent, _ *interface{}) error {
 	c.evtTarget.Dispatch(CompleteEvent, event)
 	return nil
 }
+
 func (c *Client) onDownloadError(_ *rpc2.Client, event *DownloadEvent, _ *interface{}) error {
 	c.evtTarget.Dispatch(ErrorEvent, event)
 	return nil
 }
+
 func (c *Client) onBTDownloadComplete(_ *rpc2.Client, event *DownloadEvent, _ *interface{}) error {
 	c.evtTarget.Dispatch(BTCompleteEvent, event)
 	return nil
